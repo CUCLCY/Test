@@ -16,19 +16,23 @@ public class CutTest : MonoBehaviour
     void Start()
     {
         _planes = new Plane[6];//初始化
-        Bounds bounds = new Bounds(transform.position, new Vector3(200, 200, 200));//生成包围盒
+        int sideX = (int)mainBound.extents.x;
+        int sideY = (int)mainBound.extents.y;
+        int sideZ = (int)mainBound.extents.z;
+        Bounds bounds = new Bounds(transform.position, new Vector3(sideX, sideY, sideZ));//生成包围盒
         tree = new Octree(bounds);//初始化行为树
 
-        for (int x = -100; x < 100; x+=10)//随机生成对象放到树中
+
+        for (int x = -sideX/2; x < sideX/2; x+=10)//随机生成对象放到树中
         {
-            for (int z = -100; z < 100; z+=10)
+            for (int z = -sideZ/2; z < sideZ/2; z+=10)
             {
-                for (int y = -100; y < 100; y+=10)
+                for (int y = -sideY/2; y < sideY/2; y+=10)
                 {
                     if (Random.Range(0, 20) < 1)
                     {
                         GameObject c = Instantiate(cube, transform);
-                        c.transform.localScale = new Vector3(Random.Range(5, 25), Random.Range(5, 25), Random.Range(5, 25));
+                        c.transform.localScale = new Vector3(Random.Range(5, 10), Random.Range(5, 10), Random.Range(5, 10));
                         c.transform.position = new Vector3(x, y, z);
                         c.transform.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
 
